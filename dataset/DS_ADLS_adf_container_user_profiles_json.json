@@ -1,10 +1,6 @@
 {
 	"name": "DS_ADLS_adf_container_user_profiles_json",
 	"properties": {
-		"linkedServiceName": {
-			"referenceName": "LS_ADLS_eystgaccountnew",
-			"type": "LinkedServiceReference"
-		},
 		"annotations": [],
 		"type": "Json",
 		"typeProperties": {
