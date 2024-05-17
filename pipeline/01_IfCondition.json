@@ -1,0 +1,42 @@
+{
+	"name": "01_IfCondition",
+	"properties": {
+		"activities": [
+			{
+				"name": "If Condition1",
+				"type": "IfCondition",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@contains(pipeline().parameters.listofcities,pipeline().parameters.citytosearch)",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"listofcities": {
+				"type": "array",
+				"defaultValue": [
+					"New York",
+					"London",
+					"Tokyo"
+				]
+			},
+			"citytosearch": {
+				"type": "string",
+				"defaultValue": "Mysore"
+			}
+		},
+		"variables": {
+			"ifcityexists": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "Control Flow Activities"
+		},
+		"annotations": []
+	}
+}
