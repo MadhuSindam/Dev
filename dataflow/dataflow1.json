@@ -5,23 +5,47 @@
 		"typeProperties": {
 			"sources": [
 				{
-					"linkedService": {
-						"referenceName": "AzureSqlDatabase_Emp",
-						"type": "LinkedServiceReference"
+					"dataset": {
+						"referenceName": "AzureSqlTable1",
+						"type": "DatasetReference"
 					},
 					"name": "EmployeeDataset"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_adfcontainer_output",
+						"type": "DatasetReference"
+					},
+					"name": "ADLOutputSink"
+				}
+			],
 			"transformations": [],
 			"scriptLines": [
 				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     format: 'table',",
-				"     store: 'sqlserver',",
-				"     schemaName: '',",
-				"     tableName: '',",
-				"     isolationLevel: 'READ_UNCOMMITTED') ~> EmployeeDataset"
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> EmployeeDataset",
+				"EmployeeDataset sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          id as string,",
+				"          name as string,",
+				"          dob as string,",
+				"          email as string,",
+				"          gender as string,",
+				"          country as string,",
+				"          region as string,",
+				"          city as string,",
+				"          asset as string,",
+				"          marital_status as string",
+				"     ),",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> ADLOutputSink"
 			]
 		}
 	}
