@@ -41,7 +41,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Fetch Table List').output.pipelineReturnValue",
+						"value": "@activity('Fetch Table List').output",
 						"type": "Expression"
 					},
 					"activities": [
@@ -60,14 +60,43 @@
 							"typeProperties": {
 								"source": {
 									"type": "AzureSqlSource",
+									"sqlReaderQuery": {
+										"value": "@concat('SELECT * FROM ', item().TABLE_SCHEMA , '.' ,item().TABLE_NAME)",
+										"type": "Expression"
+									},
 									"queryTimeout": "02:00:00",
 									"partitionOption": "None"
 								},
-								"enableStaging": false
+								"sink": {
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".txt"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
 							},
 							"inputs": [
 								{
 									"referenceName": "AzureSqlTable1",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DelimitedText3",
 									"type": "DatasetReference"
 								}
 							]
@@ -76,6 +105,17 @@
 				}
 			}
 		],
+		"parameters": {
+			"DS_FileName": {
+				"type": "string"
+			},
+			"DS_TableName": {
+				"type": "string"
+			},
+			"DS_SchemaName": {
+				"type": "string"
+			}
+		},
 		"folder": {
 			"name": "Case Study"
 		},
