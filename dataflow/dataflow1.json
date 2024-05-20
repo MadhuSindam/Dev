@@ -6,7 +6,7 @@
 			"sources": [
 				{
 					"linkedService": {
-						"referenceName": "AzureSqlDatabase_Training",
+						"referenceName": "AzureSqlDatabase_Emp",
 						"type": "LinkedServiceReference"
 					},
 					"name": "EmployeeDataset"
@@ -23,12 +23,24 @@
 			],
 			"transformations": [],
 			"scriptLines": [
-				"source(allowSchemaDrift: true,",
+				"source(output(",
+				"          id as integer,",
+				"          name as string,",
+				"          dob as date,",
+				"          email as string,",
+				"          gender as string,",
+				"          country as string,",
+				"          region as string,",
+				"          city as string,",
+				"          asset as integer,",
+				"          marital_status as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'table',",
 				"     store: 'sqlserver',",
-				"     schemaName: '',",
-				"     tableName: '',",
+				"     schemaName: 'dbo',",
+				"     tableName: 'user_info',",
 				"     isolationLevel: 'READ_UNCOMMITTED') ~> EmployeeDataset",
 				"EmployeeDataset sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
