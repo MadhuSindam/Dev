@@ -6,7 +6,7 @@
 			"sources": [
 				{
 					"linkedService": {
-						"referenceName": "AzureSqlDatabase_Emp",
+						"referenceName": "AzureSqlDatabase_Training",
 						"type": "LinkedServiceReference"
 					},
 					"name": "EmployeeDataset"
