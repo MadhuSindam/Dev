@@ -6,7 +6,7 @@
 			"sources": [
 				{
 					"linkedService": {
-						"referenceName": "AzureSqlDatabase_Emp",
+						"referenceName": "AzureSqlDatabase_Emp_DB_Test_123",
 						"type": "LinkedServiceReference"
 					},
 					"name": "EmployeeDataset"
@@ -21,28 +21,52 @@
 					"name": "ADLOutputSink"
 				}
 			],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "select1"
+				},
+				{
+					"name": "join1"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
-				"          id as integer,",
-				"          name as string,",
-				"          dob as date,",
-				"          email as string,",
-				"          gender as string,",
-				"          country as string,",
-				"          region as string,",
-				"          city as string,",
-				"          asset as integer,",
-				"          marital_status as string",
+				"          EmployeeID as integer,",
+				"          FirstName as string,",
+				"          LastName as string,",
+				"          Email as string,",
+				"          PhoneNumber as string,",
+				"          HireDate as date,",
+				"          DepartmentID as integer,",
+				"          Salary as decimal(10,2),",
+				"          MANAGERID as integer",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'table',",
 				"     store: 'sqlserver',",
 				"     schemaName: 'dbo',",
-				"     tableName: 'user_info',",
+				"     tableName: 'Employees',",
 				"     isolationLevel: 'READ_UNCOMMITTED') ~> EmployeeDataset",
-				"EmployeeDataset sink(allowSchemaDrift: true,",
+				"join1 select(mapColumn(",
+				"          EmployeeID,",
+				"          FirstName,",
+				"          LastName,",
+				"          Email,",
+				"          PhoneNumber,",
+				"          HireDate,",
+				"          DepartmentID,",
+				"          Salary,",
+				"          MANAGERID",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"EmployeeDataset join(ERROR_FUNCTION('') == ERROR_FUNCTION(''),",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"select1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          id as string,",
