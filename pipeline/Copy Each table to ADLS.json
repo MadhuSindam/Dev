@@ -97,7 +97,21 @@
 							"outputs": [
 								{
 									"referenceName": "DelimitedText3",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"TableName_DS": {
+											"value": "@item().TABLE_NAME",
+											"type": "Expression"
+										},
+										"FileName_DS": {
+											"value": "@item().TABLE_NAME",
+											"type": "Expression"
+										},
+										"SchemaName_DS": {
+											"value": "@item().TABLE_SCHEMA",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}
@@ -105,17 +119,6 @@
 				}
 			}
 		],
-		"parameters": {
-			"DS_FileName": {
-				"type": "string"
-			},
-			"DS_TableName": {
-				"type": "string"
-			},
-			"DS_SchemaName": {
-				"type": "string"
-			}
-		},
 		"folder": {
 			"name": "Case Study"
 		},
