@@ -5,9 +5,9 @@
 		"typeProperties": {
 			"sources": [
 				{
-					"dataset": {
-						"referenceName": "AzureSqlTable1",
-						"type": "DatasetReference"
+					"linkedService": {
+						"referenceName": "AzureSqlDatabase_Emp",
+						"type": "LinkedServiceReference"
 					},
 					"name": "EmployeeDataset"
 				}
@@ -25,8 +25,11 @@
 			"scriptLines": [
 				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> EmployeeDataset",
+				"     format: 'table',",
+				"     store: 'sqlserver',",
+				"     schemaName: '',",
+				"     tableName: '',",
+				"     isolationLevel: 'READ_UNCOMMITTED') ~> EmployeeDataset",
 				"EmployeeDataset sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
